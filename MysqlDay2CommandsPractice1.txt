@@ -1,0 +1,25 @@
+mysql> create database db1;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> use datbase db1;
+ERROR 1049 (42000): Unknown database 'datbase'
+mysql> use db1;
+Database changed
+mysql> create table table1(row1 int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc table1;
++-------+---------+------+-----+---------+-------+
+| Field | Type    | Null | Key | Default | Extra |
++-------+---------+------+-----+---------+-------+
+| row1  | int(11) | YES  |     | NULL    |       |
++-------+---------+------+-----+---------+-------+
+1 row in set (0.03 sec)
+
+mysql> drop table1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table1' at line 1
+mysql> drop table table1;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop database db1;
+Query OK, 0 rows affected (0.04 sec)
