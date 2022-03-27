@@ -1,0 +1,53 @@
+mysql> select * from student_info;
++------+--------------+-------+-----------+
+| sid  | student_name | marks | city      |
++------+--------------+-------+-----------+
+|  101 | praveen      |    98 | Hyderabad |
+|  103 | keerthi      |    78 | pune      |
+|  105 | poorna       |    78 | Bangalore |
+|  108 | Karthik      |    90 | Hyderabad |
+|  104 | Satish       |    34 | pune      |
++------+--------------+-------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> update student_info set marks=82 where sid=105;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student_info;
++------+--------------+-------+-----------+
+| sid  | student_name | marks | city      |
++------+--------------+-------+-----------+
+|  101 | praveen      |    98 | Hyderabad |
+|  103 | keerthi      |    78 | pune      |
+|  105 | poorna       |    82 | Bangalore |
+|  108 | Karthik      |    90 | Hyderabad |
+|  104 | Satish       |    34 | pune      |
++------+--------------+-------+-----------+
+5 rows in set (0.00 sec)
+mysql> select * from student_info;
++------+--------------+-------+-----------+
+| sid  | student_name | marks | city      |
++------+--------------+-------+-----------+
+|  101 | praveen      |    98 | Hyderabad |
+|  103 | keerthi      |    78 | pune      |
+|  105 | poorna       |    82 | Bangalore |
+|  108 | Karthik      |    90 | Hyderabad |
+|  104 | Satish       |    34 | pune      |
++------+--------------+-------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> update student_info set marks=marks-5 where city='Hyderabad';
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+mysql> select * from student_info;
++------+--------------+-------+-----------+
+| sid  | student_name | marks | city      |
++------+--------------+-------+-----------+
+|  101 | praveen      |    93 | Hyderabad |
+|  103 | keerthi      |    78 | pune      |
+|  105 | poorna       |    82 | Bangalore |
+|  108 | Karthik      |    85 | Hyderabad |
+|  104 | Satish       |    34 | pune      |
++------+--------------+-------+-----------+
+5 rows in set (0.00 sec)
