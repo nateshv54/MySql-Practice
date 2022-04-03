@@ -1,0 +1,132 @@
+mysql> use weekend_batch;
+Database changed
+mysql> desc student_info;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| sid          | int(11)     | YES  |     | NULL    |       |
+| student_name | varchar(20) | YES  |     | NULL    |       |
+| marks        | int(11)     | YES  |     | NULL    |       |
+| city         | varchar(20) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.05 sec)
+
+mysql> select * from student_info;
++------+--------------+-------+-----------+
+| sid  | student_name | marks | city      |
++------+--------------+-------+-----------+
+|  101 | praveen      |    93 | Hyderabad |
+|  103 | keerthi      |    78 | pune      |
+|  105 | poorna       |    82 | Bangalore |
+|  108 | Karthik      |    85 | Hyderabad |
+|  104 | Satish       |    34 | pune      |
++------+--------------+-------+-----------+
+5 rows in set (0.01 sec)
+
+mysql> select max(marks) from student_info;
++------------+
+| max(marks) |
++------------+
+|         93 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select min(marks) as Least_score from student_info;
++-------------+
+| Least_score |
++-------------+
+|          34 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> Select avg(marks) as avg_score from student_info;
++-----------+
+| avg_score |
++-----------+
+|   74.4000 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(marks) as total_score from student_info;
++-------------+
+| total_score |
++-------------+
+|         372 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select count(*) as no_of_records from student_info;
++---------------+
+| no_of_records |
++---------------+
+|             5 |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select count(*) as number_of_students from student_info where city='pune';
++--------------------+
+| number_of_students |
++--------------------+
+|                  2 |
++--------------------+
+1 row in set (0.02 sec)
+
+mysql> select count(*) as "no of records" from student_info group by city;
++---------------+
+| no of records |
++---------------+
+|             1 |
+|             2 |
+|             2 |
++---------------+
+3 rows in set (0.01 sec)
+
+mysql> select city,count(*) as "no of records" from student_info group by city;
++-----------+---------------+
+| city      | no of records |
++-----------+---------------+
+| Bangalore |             1 |
+| Hyderabad |             2 |
+| pune      |             2 |
++-----------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select city,avg(marks) as "avg_score" from student_info group by city;
++-----------+-----------+
+| city      | avg_score |
++-----------+-----------+
+| Bangalore |   82.0000 |
+| Hyderabad |   89.0000 |
+| pune      |   56.0000 |
++-----------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> select count(*) as "no of records" from student_info group by city;
++---------------+
+| no of records |
++---------------+
+|             1 |
+|             2 |
+|             2 |
++---------------+
+3 rows in set (0.00 sec)
+
+mysql> select city,avg(marks) as "avg_score" from student_info group by city;
++-----------+-----------+
+| city      | avg_score |
++-----------+-----------+
+| Bangalore |   82.0000 |
+| Hyderabad |   89.0000 |
+| pune      |   56.0000 |
++-----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select city,avg(marks) as "avg_score" from student_info group by city order by avg_score asc;
++-----------+-----------+
+| city      | avg_score |
++-----------+-----------+
+| pune      |   56.0000 |
+| Bangalore |   82.0000 |
+| Hyderabad |   89.0000 |
++-----------+-----------+
+3 rows in set (0.00 sec)
