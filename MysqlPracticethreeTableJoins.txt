@@ -1,0 +1,110 @@
+mysql> select * from customer;
++------+---------+----------+--------+------+
+| cnum | cname   | city     | rating | snum |
++------+---------+----------+--------+------+
+| 2001 | Hoffman | London   |    100 | 1001 |
+| 2002 | Ram     | Rome     |    200 | 1003 |
+| 2003 | Kishen  | San Jose |    200 | 1002 |
+| 2004 | Sath    | Berlin   |    300 | 1002 |
+| 2006 | praveen | London   |    100 | 1001 |
+| 2007 | Satish  | Rome     |    100 | 1004 |
+| 2008 | Karthik | San Jose |    300 | 1007 |
++------+---------+----------+--------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from salespeople;
++------+---------+-----------+------+
+| snum | sname   | city      | comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1003 | AxelRod | New York  | 0.10 |
+| 1004 | Motika  | London    | 0.11 |
+| 1005 | Fran    | London    | 0.26 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
++------+---------+-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from orders;
++------+---------+------------+------+
+| onum | amt     | odate      | cnum |
++------+---------+------------+------+
+| 3001 |   18.69 | 2021-03-10 | 2008 |
+| 3002 | 1800.09 | 2021-04-17 | 2007 |
+| 3003 |  900.60 | 2021-04-05 | 2001 |
+| 3005 |  156.10 | 2021-02-11 | 2003 |
+| 3006 |  300.13 | 2021-05-11 | 2008 |
+| 3007 |  111.19 | 2021-06-13 | 2002 |
+| 3008 |  190.49 | 2021-07-12 | 2006 |
+| 3009 |  345.90 | 2021-06-15 | 2002 |
+| 3010 |  180.69 | 2021-06-30 | 2004 |
+| 3011 |  234.19 | 2021-07-20 | 2006 |
++------+---------+------------+------+
+10 rows in set (0.01 sec)
+
+mysql> select * from salespeople s join customer c join orders o on s.snum=c.snum and c.cnum=o.cnum;
++------+---------+-----------+------+------+---------+----------+--------+------+------+---------+------------+------+
+| snum | sname   | city      | comm | cnum | cname   | city     | rating | snum | onum | amt     | odate      | cnum |
++------+---------+-----------+------+------+---------+----------+--------+------+------+---------+------------+------+
+| 1001 | Peel    | London    | 0.12 | 2001 | Hoffman | London   |    100 | 1001 | 3003 |  900.60 | 2021-04-05 | 2001 |
+| 1001 | Peel    | London    | 0.12 | 2006 | praveen | London   |    100 | 1001 | 3008 |  190.49 | 2021-07-12 | 2006 |
+| 1001 | Peel    | London    | 0.12 | 2006 | praveen | London   |    100 | 1001 | 3011 |  234.19 | 2021-07-20 | 2006 |
+| 1002 | Serres  | San Jose  | 0.13 | 2003 | Kishen  | San Jose |    200 | 1002 | 3005 |  156.10 | 2021-02-11 | 2003 |
+| 1002 | Serres  | San Jose  | 0.13 | 2004 | Sath    | Berlin   |    300 | 1002 | 3010 |  180.69 | 2021-06-30 | 2004 |
+| 1003 | AxelRod | New York  | 0.10 | 2002 | Ram     | Rome     |    200 | 1003 | 3007 |  111.19 | 2021-06-13 | 2002 |
+| 1003 | AxelRod | New York  | 0.10 | 2002 | Ram     | Rome     |    200 | 1003 | 3009 |  345.90 | 2021-06-15 | 2002 |
+| 1004 | Motika  | London    | 0.11 | 2007 | Satish  | Rome     |    100 | 1004 | 3002 | 1800.09 | 2021-04-17 | 2007 |
+| 1007 | Rifkin  | Barcelona | 0.15 | 2008 | Karthik | San Jose |    300 | 1007 | 3001 |   18.69 | 2021-03-10 | 2008 |
+| 1007 | Rifkin  | Barcelona | 0.15 | 2008 | Karthik | San Jose |    300 | 1007 | 3006 |  300.13 | 2021-05-11 | 2008 |
++------+---------+-----------+------+------+---------+----------+--------+------+------+---------+------------+------+
+10 rows in set (0.01 sec)
+
+mysql> select s.snum,s.sname,c.cnum,c.cname, o.onum,o.amt from salespeople s join customer c join orders o on s.snum=c.snum and c.cnum=o.cnum;
++------+---------+------+---------+------+---------+
+| snum | sname   | cnum | cname   | onum | amt     |
++------+---------+------+---------+------+---------+
+| 1001 | Peel    | 2001 | Hoffman | 3003 |  900.60 |
+| 1001 | Peel    | 2006 | praveen | 3008 |  190.49 |
+| 1001 | Peel    | 2006 | praveen | 3011 |  234.19 |
+| 1002 | Serres  | 2003 | Kishen  | 3005 |  156.10 |
+| 1002 | Serres  | 2004 | Sath    | 3010 |  180.69 |
+| 1003 | AxelRod | 2002 | Ram     | 3007 |  111.19 |
+| 1003 | AxelRod | 2002 | Ram     | 3009 |  345.90 |
+| 1004 | Motika  | 2007 | Satish  | 3002 | 1800.09 |
+| 1007 | Rifkin  | 2008 | Karthik | 3001 |   18.69 |
+| 1007 | Rifkin  | 2008 | Karthik | 3006 |  300.13 |
++------+---------+------+---------+------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select s.snum, sum(o.amt) as "total sales" from salespeople s join customer c join orders o on s.snum=c.snum and c.cnum=o.cnum group by s.snum order by "total sales" desc;
++------+-------------+
+| snum | total sales |
++------+-------------+
+| 1007 |      318.82 |
+| 1004 |     1800.09 |
+| 1001 |     1325.28 |
+| 1002 |      336.79 |
+| 1003 |      457.09 |
++------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select s.snum, sum(o.amt) as "total sales" from salespeople s join customer c join orders o on s.snum=c.snum and c.cnum=o.cnum group by s.snum order by sum(o.amt) desc;
++------+-------------+
+| snum | total sales |
++------+-------------+
+| 1004 |     1800.09 |
+| 1001 |     1325.28 |
+| 1003 |      457.09 |
+| 1002 |      336.79 |
+| 1007 |      318.82 |
++------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select s.snum, sum(o.amt) as "total sales" from salespeople s join customer c join orders o on s.snum=c.snum and c.cnum=o.cnum group by s.snum having sum(o.amt)>=1000 order by sum(o.amt) desc;
++------+-------------+
+| snum | total sales |
++------+-------------+
+| 1004 |     1800.09 |
+| 1001 |     1325.28 |
++------+-------------+
+2 rows in set (0.00 sec)
