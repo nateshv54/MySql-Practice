@@ -1,0 +1,231 @@
+mysql> create database retail;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use reatail;
+ERROR 1049 (42000): Unknown database 'reatail'
+mysql> use retail
+Database changed
+mysql> CREATE TABLE IF NOT EXISTS salespeople (
+    -> snum INT NOT NULL,
+    -> sname VARCHAR(30) NOT NULL,
+    -> city VARCHAR(30) NOT NULL,
+    -> comm DECIMAL(4,2) NOT NULL,
+    -> PRIMARY KEY (snum)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO salespeople VALUES (1001, 'Peel', 'London', 0.12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO salespeople VALUES (1002, 'Serres', 'San Jose', 0.13);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO salespeople VALUES (1004, 'Motika', 'London', 0.11);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO salespeople VALUES (1007, 'Rifkin', 'Barcelona', 0.15);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO salespeople VALUES (1003, 'AxelRod', 'New York', 0.10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO salespeople VALUES (1005, 'Fran', 'London', 0.26);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from salespeople;
++------+---------+-----------+------+
+| snum | sname   | city      | comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1003 | AxelRod | New York  | 0.10 |
+| 1004 | Motika  | London    | 0.11 |
+| 1005 | Fran    | London    | 0.26 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
++------+---------+-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE TABLE IF NOT EXISTS customer (
+    -> cnum INT NOT NULL,
+    -> cname VARCHAR(30) NOT NULL,
+    -> city VARCHAR(30) NOT NULL,
+    -> rating int not null,
+    -> snum int NOT NULL,
+    -> PRIMARY KEY (cnum),
+    -> FOREIGN KEY (snum) REFERENCES salespeople(snum)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+> CREATE TABLE IF NOT EXISTS customer (
+    -> cnum INT NOT NULL,
+    -> cname VARCHAR(30) NOT NULL,
+    -> city VARCHAR(30) NOT NULL,
+    -> rating int not null,
+    -> snum int NOT NULL,
+    -> PRIMARY KEY (cnum),
+    -> FOREIGN KEY (snum) REFERENCES salespeople(snum)
+    -> );INSERT INTO customer VALUES (2001, 'Hoffman', 'London',100, 1001);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO customer VALUES (2002, 'Ram', 'Rome',200, 1003);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO customer VALUES (2003, 'Kishen', 'San Jose',200, 1002);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO customer VALUES (2004, 'Sath', 'Berlin',300, 1002);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO customer VALUES (2006, 'praveen', 'London',100, 1001);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO customer VALUES (2008, 'Karthik', 'San Jose',300, 1007);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO customer VALUES (2007, 'Satish', 'Rome',100, 1004);
+Query OK, 1 row affected (0.00 sec)
+mysql> select * from customer;
++------+---------+----------+--------+------+
+| cnum | cname   | city     | rating | snum |
++------+---------+----------+--------+------+
+| 2001 | Hoffman | London   |    100 | 1001 |
+| 2002 | Ram     | Rome     |    200 | 1003 |
+| 2003 | Kishen  | San Jose |    200 | 1002 |
+| 2004 | Sath    | Berlin   |    300 | 1002 |
+| 2006 | praveen | London   |    100 | 1001 |
+| 2007 | Satish  | Rome     |    100 | 1004 |
+| 2008 | Karthik | San Jose |    300 | 1007 |
++------+---------+----------+--------+------+
+7 rows in set (0.00 sec)
+mysql> CREATE TABLE IF NOT EXISTS orders (
+    -> onum INT NOT NULL,
+    -> amt DECIMAL(7,2) NOT NULL,
+    -> odate Date NOT NULL,
+    -> cnum int NOT NULL,
+    -> PRIMARY KEY (onum),
+    -> FOREIGN KEY (cnum) REFERENCES customer(cnum)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> INSERT INTO orders VALUES (3001, 18.69, '2021-03-10', 2008);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3003, 900.60, '2021-04-05', 2001);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3002, 1800.09, '2021-04-17', 2007);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3005, 156.10, '2021-02-11', 2003);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3006, 300.13, '2021-05-11', 2008);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3009, 345.90, '2021-06-15', 2002);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3007, 111.19, '2021-06-13', 2002);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3008, 190.49, '2021-07-12', 2006);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3010, 180.69, '2021-06-30', 2004);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO orders VALUES (3011, 234.19, '2021-07-20', 2006);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from orders;
++------+---------+------------+------+
+| onum | amt     | odate      | cnum |
++------+---------+------------+------+
+| 3001 |   18.69 | 2021-03-10 | 2008 |
+| 3002 | 1800.09 | 2021-04-17 | 2007 |
+| 3003 |  900.60 | 2021-04-05 | 2001 |
+| 3005 |  156.10 | 2021-02-11 | 2003 |
+| 3006 |  300.13 | 2021-05-11 | 2008 |
+| 3007 |  111.19 | 2021-06-13 | 2002 |
+| 3008 |  190.49 | 2021-07-12 | 2006 |
+| 3009 |  345.90 | 2021-06-15 | 2002 |
+| 3010 |  180.69 | 2021-06-30 | 2004 |
+| 3011 |  234.19 | 2021-07-20 | 2006 |
++------+---------+------------+------+
+10 rows in set (0.00 sec)
+select s.snum, s.sname,c.cnum, c.cname from salespeople s join customer c on s.snum=c.snum;
++------+---------+------+---------+
+| snum | sname   | cnum | cname   |
++------+---------+------+---------+
+| 1001 | Peel    | 2001 | Hoffman |
+| 1001 | Peel    | 2006 | praveen |
+| 1002 | Serres  | 2003 | Kishen  |
+| 1002 | Serres  | 2004 | Sath    |
+| 1003 | AxelRod | 2002 | Ram     |
+| 1004 | Motika  | 2007 | Satish  |
+| 1007 | Rifkin  | 2008 | Karthik |
++------+---------+------+---------+
+7 rows in set (0.01 sec)
+
+mysql> select s.num,sname,c.name from salespeople s join customer c on s.num=c.snum;
+ERROR 1054 (42S22): Unknown column 's.num' in 'field list'
+mysql> select s.snum,c.cnum, c.cname from salespeople s join customer c on s.snum=c.snum;
++------+------+---------+
+| snum | cnum | cname   |
++------+------+---------+
+| 1001 | 2001 | Hoffman |
+| 1001 | 2006 | praveen |
+| 1002 | 2003 | Kishen  |
+| 1002 | 2004 | Sath    |
+| 1003 | 2002 | Ram     |
+| 1004 | 2007 | Satish  |
+| 1007 | 2008 | Karthik |
++------+------+---------+
+7 rows in set (0.00 sec)
+
+mysql> select * from salespeople s join customer c on s.snum=c.snum;
++------+---------+-----------+------+------+---------+----------+--------+------+
+| snum | sname   | city      | comm | cnum | cname   | city     | rating | snum |
++------+---------+-----------+------+------+---------+----------+--------+------+
+| 1001 | Peel    | London    | 0.12 | 2001 | Hoffman | London   |    100 | 1001 | 
+| 1001 | Peel    | London    | 0.12 | 2006 | praveen | London   |    100 | 1001 | 
+| 1002 | Serres  | San Jose  | 0.13 | 2003 | Kishen  | San Jose |    200 | 1002 | 
+| 1002 | Serres  | San Jose  | 0.13 | 2004 | Sath    | Berlin   |    300 | 1002 | 
+| 1003 | AxelRod | New York  | 0.10 | 2002 | Ram     | Rome     |    200 | 1003 | 
+| 1004 | Motika  | London    | 0.11 | 2007 | Satish  | Rome     |    100 | 1004 | 
+| 1007 | Rifkin  | Barcelona | 0.15 | 2008 | Karthik | San Jose |    300 | 1007 | 
++------+---------+-----------+------+------+---------+----------+--------+------+
+7 rows in set (0.00 sec)
+
+mysql> select s.snum,s.sname,s.city, c.cnum,c.cname from salespeople s join customer c on s.snum=c.snum where s.city='Rome';
+Empty set (0.01 sec)
+
+mysql> select s.snum,s.sname,s.city, c.cnum,c.cname from salespeople s join customer c on s.snum=c.snum where s.city='San Jose';
++------+--------+----------+------+--------+
+| snum | sname  | city     | cnum | cname  |
++------+--------+----------+------+--------+
+| 1002 | Serres | San Jose | 2003 | Kishen |
+| 1002 | Serres | San Jose | 2004 | Sath   |
++------+--------+----------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select s.snum,s.sname,s.city, c.cnum,c.cname from salespeople s join customer c on s.snum=c.snum where s.city='London';
++------+--------+--------+------+---------+
+| snum | sname  | city   | cnum | cname   |
++------+--------+--------+------+---------+
+| 1001 | Peel   | London | 2001 | Hoffman |
+| 1001 | Peel   | London | 2006 | praveen |
+| 1004 | Motika | London | 2007 | Satish  |
++------+--------+--------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select s.snum,s.sname,s.city, c.cnum,c.cname from salespeople s join customer c on s.snum=c.snum where c.rating>=150;
++------+---------+-----------+------+---------+
+| snum | sname   | city      | cnum | cname   |
++------+---------+-----------+------+---------+
+| 1002 | Serres  | San Jose  | 2003 | Kishen  |
+| 1002 | Serres  | San Jose  | 2004 | Sath    |
+| 1003 | AxelRod | New York  | 2002 | Ram     |
+| 1007 | Rifkin  | Barcelona | 2008 | Karthik |
++------+---------+-----------+------+---------+
+4 rows in set (0.00 sec)
