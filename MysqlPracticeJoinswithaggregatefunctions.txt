@@ -1,0 +1,126 @@
+mysql> select s.snum, count(c.cnum) as No_of_customers from salespeople s join customer c on s.snum=c.snum group by s.snum;
++------+-----------------+
+| snum | No_of_customers |
++------+-----------------+
+| 1001 |               2 |
+| 1002 |               2 |
+| 1003 |               1 |
+| 1004 |               1 |
+| 1007 |               1 |
++------+-----------------+
+5 rows in set (0.02 sec)
+
+mysql> select s.snum, count(c.cnum) as No_of_customers,avg(c.rating) as Avg_rating from salespeople s join customer c on s.snum=c.snum group by s.snum;
++------+-----------------+------------+
+| snum | No_of_customers | Avg_rating |
++------+-----------------+------------+
+| 1001 |               2 |   100.0000 |
+| 1002 |               2 |   250.0000 |
+| 1003 |               1 |   200.0000 |
+| 1004 |               1 |   100.0000 |
+| 1007 |               1 |   300.0000 |
++------+-----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select s.snum, count(c.cnum) as No_of_customers,avg(c.rating) as Avg_rating, max(c.rating) as max_rating, min(c.rating) as min_rating from salespeople s join customer c on s.snum=c.snum group by s.snum;
++------+-----------------+------------+------------+------------+
+| snum | No_of_customers | Avg_rating | max_rating | min_rating |
++------+-----------------+------------+------------+------------+
+| 1001 |               2 |   100.0000 |        100 |        100 |
+| 1002 |               2 |   250.0000 |        300 |        200 |
+| 1003 |               1 |   200.0000 |        200 |        200 |
+| 1004 |               1 |   100.0000 |        100 |        100 |
+| 1007 |               1 |   300.0000 |        300 |        300 |
++------+-----------------+------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select s.snum, count(c.cnum) as No_of_customers,avg(c.rating) as Avg_rating, max(c.rating) as max_rating, min(c.rating) as min_rating from salespeople s join customer c on s.snum=c.snum group by s.snum having avg(c.rating)>200;
++------+-----------------+------------+------------+------------+
+| snum | No_of_customers | Avg_rating | max_rating | min_rating |
++------+-----------------+------------+------------+------------+
+| 1002 |               2 |   250.0000 |        300 |        200 |
+| 1007 |               1 |   300.0000 |        300 |        300 |
++------+-----------------+------------+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.snum, count(c.cnum) as No_of_customers,avg(c.rating) as Avg_rating, max(c.rating) as max_rating, min(c.rating) as min_rating from salespeople s join customer c on s.snum=c.snum group by s.snum  order by Avg_rating;
++------+-----------------+------------+------------+------------+
+| snum | No_of_customers | Avg_rating | max_rating | min_rating |
++------+-----------------+------------+------------+------------+
+| 1001 |               2 |   100.0000 |        100 |        100 |
+| 1004 |               1 |   100.0000 |        100 |        100 |
+| 1003 |               1 |   200.0000 |        200 |        200 |
+| 1002 |               2 |   250.0000 |        300 |        200 |
+| 1007 |               1 |   300.0000 |        300 |        300 |
++------+-----------------+------------+------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> select s.snum, count(c.cnum) as No_of_customers,avg(c.rating) as Avg_rating, max(c.rating) as max_rating, min(c.rating) as min_rating from salespeople s join customer c on s.snum=c.snum group by s.snum  order by Avg_rating desc;
++------+-----------------+------------+------------+------------+
+| snum | No_of_customers | Avg_rating | max_rating | min_rating |
++------+-----------------+------------+------------+------------+
+| 1007 |               1 |   300.0000 |        300 |        300 |
+| 1002 |               2 |   250.0000 |        300 |        200 |
+| 1003 |               1 |   200.0000 |        200 |        200 |
+| 1001 |               2 |   100.0000 |        100 |        100 |
+| 1004 |               1 |   100.0000 |        100 |        100 |
++------+-----------------+------------+------------+------------+
+5 rows in set (0.00 sec)
+mysql> select * from orders order by amt desc;
++------+---------+------------+------+
+| onum | amt     | odate      | cnum |
++------+---------+------------+------+
+| 3002 | 1800.09 | 2021-04-17 | 2007 |
+| 3003 |  900.60 | 2021-04-05 | 2001 |
+| 3009 |  345.90 | 2021-06-15 | 2002 |
+| 3006 |  300.13 | 2021-05-11 | 2008 |
+| 3011 |  234.19 | 2021-07-20 | 2006 |
+| 3008 |  190.49 | 2021-07-12 | 2006 |
+| 3010 |  180.69 | 2021-06-30 | 2004 |
+| 3005 |  156.10 | 2021-02-11 | 2003 |
+| 3007 |  111.19 | 2021-06-13 | 2002 |
+| 3001 |   18.69 | 2021-03-10 | 2008 |
++------+---------+------------+------+
+10 rows in set (0.01 sec)
+
+mysql> select * from orders order by amt desc limit 2;
++------+---------+------------+------+
+| onum | amt     | odate      | cnum |
++------+---------+------------+------+
+| 3002 | 1800.09 | 2021-04-17 | 2007 |
+| 3003 |  900.60 | 2021-04-05 | 2001 |
++------+---------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from orders where amt =(select min(amt) from orders);
++------+-------+------------+------+
+| onum | amt   | odate      | cnum |
++------+-------+------------+------+
+| 3001 | 18.69 | 2021-03-10 | 2008 |
++------+-------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from orders where amt =(select max(amt) from orders);
++------+---------+------------+------+
+| onum | amt     | odate      | cnum |
++------+---------+------------+------+
+| 3002 | 1800.09 | 2021-04-17 | 2007 |
++------+---------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from orders where amt>=(select avg(amt) from orders);
++------+---------+------------+------+
+| onum | amt     | odate      | cnum |
++------+---------+------------+------+
+| 3002 | 1800.09 | 2021-04-17 | 2007 |
+| 3003 |  900.60 | 2021-04-05 | 2001 |
++------+---------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select avg(amt) from orders;
++------------+
+| avg(amt)   |
++------------+
+| 423.807000 |
++------------+
+1 row in set (0.00 sec)
